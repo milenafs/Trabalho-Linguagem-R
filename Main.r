@@ -12,7 +12,7 @@ cepagri <- cepagri[cepagri$sensa < 40 && cepagri$umid > 15 && cepagri$umid < 95 
 summary(cepagri)
 rm(cepagri)
 
-cor(cepagri[, 2:5])
+cor(cepagri[, 2:5]) # correlação dos valores da cepagri
 
 # Ideias de tabelas
 # 1. correlação temperatura-sensação térmica
@@ -27,26 +27,28 @@ cor(cepagri[, 2:5])
 # 4. linha + coluna temperatura-umidade por mês
 # 5. gráfico de condições climáticas extremas
 
-
-# ------------------------------------ Tabela médias por ano *** ------------------------------------------------ #
+# ------------------------------------ Tabela médias por ano ------------------------------------------------ #
 mediasPorAno <- data.frame()
 for (ano in unique(cepagri$horario$year)) {
-  mediaTemp <- mean(cepagri$temp[cepagri$horario$year == ano])
-  mediaVento <- mean(cepagri$vento[cepagri$horario$year == ano])
-  mediaUmid <- mean(cepagri$umid[cepagri$horario$year == ano])
-  mediaSensa <- mean(cepagri$sensa[cepagri$horario$year == ano])
-  mediasPorAno <-rbind(mediasPorAno, data.frame(mediaTemp, mediaVento, mediaUmid, mediaSensa, row.names = ano + 1900))
+  mediasPorAno <- rbind(mediasPorAno, apply(cepagri[cepagri$horario$year == ano, 2:5], 2, mean))
 }
-rm(mediaTemp, mediaSensa, mediaUmid, mediaVento)
+rownames(mediasPorAno) <- unique(cepagri$horario$year) + 1900; colnames(mediasPorAno) <- c("Temp", "Vento", "Umidade", "Sensacao")
+# ----------------------------------------------------------------------------------------------------------- #
+
+# ------------------------------------ Tabela médias por mês ------------------------------------------------ #
+mediasPorMes <- data.frame()
+for (ano in unique(cepagri$horario$year)) {
+  for (mes in unique(cepagri[cepagri$horario$year == ano,]$horario$mon)) {
+    mediasPorMes <- rbind(mediasPorMes, apply(cepagri[cepagri$horario$year == ano & cepagri[cepagri$horario$year == ano,]$horario$mon == mes, 2:5], 2, mean))
+  }
+}
+colnames(mediasPorMes) <- c("Temp", "Vento", "Umidade", "Sensacao")
 # ----------------------------------------------------------------------------------------------------------- #
 
 # --------------------------- Gráfico média temperatura durante os anos ----------------------------------- #
-grafTemp <- ggplot(mediasPorAno, aes(x = rownames(mediasPorAno), group = 1))
-grafTemp <- grafTemp + geom_point(aes(y = mediasPorAno$mediaTemp, group = 1))
-grafTemp <- grafTemp + geom_point(aes(y = mediasPorAno$mediaSensa, group = 1))
-grafTemp <- grafTemp + geom_line(aes(y = mediasPorAno$mediaTemp))
-grafTemp <- grafTemp + geom_line(aes(y = mediasPorAno$mediaSensa))
-grafTemp <- grafTemp + xlab("Anos") + ylab("Temperatura") + ggtitle("Temperatura média/Ano")
+grafTemp <- ggplot(mediasPorMes, aes(x = 1:nrow(mediasPorMes), group = 1,  weight = Umidade))
+grafTemp <- grafTemp + geom_point(color=rgb(255, 0, 0, maxColorValue = 255), aes(y = Temp, group = 1))
+grafTemp <- grafTemp + geom_line(color=rgb(255, 0, 0, maxColorValue = 255), aes(y = Temp, group = 1))
+grafTemp <- grafTemp + theme_minimal()
+grafTemp <- grafTemp + xlab("Meses") + ylab("Temperatura") + ggtitle("Temperatura média por mês")
 # --------------------------------------------------------------------------------------------------------- #
-
-diaMaisQuente <- cepagri$horario[cepagri$temp == 38.1]
