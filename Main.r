@@ -12,17 +12,20 @@ cepagri <- cepagri[cepagri$sensa < 40 && cepagri$umid > 15 && cepagri$umid < 95 
 summary(cepagri)
 rm(cepagri)
 
+cor(cepagri[, 2:5])
+
 # Ideias de tabelas
-# 1. correlação vento-sensação térmica
+# 1. correlação temperatura-sensação térmica
 # 2. correlação temperatura-umidade
-# 3. 
+# 3. umidades do ano de seca
+# 4(bonus). tabela média por mês
 
 # Ideias de gráficos
-# 1. climatograma de um ano só
-# 2.
-# 3.
-# 4.
-# 5.
+# 1. gráfico preenchimento inverno
+# 2. grafico de ponto com uma reta normal dia por dia umidade ano de seca
+# 3. grafico degradê de cor temperatura-sensação
+# 4. linha + coluna temperatura-umidade por mês
+# 5. gráfico de condições climáticas extremas
 
 
 # ------------------------------------ Tabela médias por ano *** ------------------------------------------------ #
@@ -38,9 +41,11 @@ rm(mediaTemp, mediaSensa, mediaUmid, mediaVento)
 # ----------------------------------------------------------------------------------------------------------- #
 
 # --------------------------- Gráfico média temperatura durante os anos ----------------------------------- #
-grafTemp <- ggplot(mediasPorAno, aes(x = rownames(mediasPorAno), y = mediasPorAno$mediaTemp, group = 1))
-grafTemp <- grafTemp + geom_point()
-grafTemp <- grafTemp + geom_line()
+grafTemp <- ggplot(mediasPorAno, aes(x = rownames(mediasPorAno), group = 1))
+grafTemp <- grafTemp + geom_point(aes(y = mediasPorAno$mediaTemp, group = 1))
+grafTemp <- grafTemp + geom_point(aes(y = mediasPorAno$mediaSensa, group = 1))
+grafTemp <- grafTemp + geom_line(aes(y = mediasPorAno$mediaTemp))
+grafTemp <- grafTemp + geom_line(aes(y = mediasPorAno$mediaSensa))
 grafTemp <- grafTemp + xlab("Anos") + ylab("Temperatura") + ggtitle("Temperatura média/Ano")
 # --------------------------------------------------------------------------------------------------------- #
 
