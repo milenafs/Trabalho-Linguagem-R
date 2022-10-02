@@ -65,6 +65,30 @@ for (mes in unique(cepagri$horario$mon[cepagri$horario$year == 114])) {
 }
 rownames(mediasAnoSeca) <- nomeLinhas; colnames(mediasAnoSeca) <- c("Minimo", "1 quartil", "Mediana", "3 quartil", "Máximo")
 
+#----------------------------------Gráfico - correlação temperatura-sensação térmica mês--------------------------------------#
+
+grafTempSensa <- ggplot(tempSensaMes, aes(x = 1:nrow(tempSensaMes), group = 1))
+grafTempSensa <- grafTempSensa + geom_point(aes(y = mediaTemperatura, colour = mediaTemperatura), alpha = 1, group = 1)
+grafTempSensa <- grafTempSensa + geom_point(aes(y = mediaSensacao, colour = mediaSensacao), alpha = 0.3, group = 1)
+
+grafTempSensa <- grafTempSensa + scale_color_continuous(low = "blue", high = "red")
+grafTempSensa <- grafTempSensa + xlab("Meses") + ylab("Temperatura") + ggtitle("Correlação Temperatura e Sensação Térmica")
+grafTempSensa
+
+#------------------------------gráfico preenchimento inverno-----------------------------------
+# 20 ou 21 de junho e acaba em 22 ou 23 de setembro.  inverno = julho agosto setembro
+tabInverno <- data.frame()
+for (ano in unique(cepagri$horario$year)) {
+    mediaTemperatura <- (mean(cepagri$temp[cepagri$horario$mon == 6 & cepagri$horario$year == ano])+
+                           mean(cepagri$temp[cepagri$horario$mon == 7 & cepagri$horario$year == ano])+
+                                  mean(cepagri$temp[cepagri$horario$mon == 8 & cepagri$horario$year == ano]))/3
+    tabInverno <- rbind(tabInverno,data.frame(mediaTemperatura,ano=ano+1900))
+}
+tabInverno <- na.omit(tabInverno)
+grafInverno <- ggplot(tabInverno, aes(x = ano)) + geom_density(tabInverno,aes(y = ..count..),color="darkblue", fill="darkblue",alpha=0.25)
+grafInverno <- grafInverno + xlab("Anos") + ylab("Nível da Média Témica") + ggtitle("Comparação da Média dos Invernos desde 2015 até 2021")
+grafInverno
+
 # --------------------------- Gráfico média temperatura durante os anos ----------------------------------- #
 grafTemp <- ggplot(mediasPorMes, aes(x = rownames(mediasPorMes), group = 1,  weight = Umidade))
 grafTemp <- grafTemp + geom_point(color=rgb(255, 0, 0, maxColorValue = 255), aes(y = Temp, group = 1))
