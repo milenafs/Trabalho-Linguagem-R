@@ -33,10 +33,10 @@ grafInverno
 #------------------------------gráfico de condições climáticas extremas--------------------------------#
 #condições extremas: temp > 35 < 5, vento > 62 umidade < 10%
 rm(tabCondExtre)
-tabCondExtre <- data.frame(Temp=cepagri$temp[cepagri$temp > 35 & cepagri$horario$year == 120],Vento=cepagri$vento[cepagri$temp > 35 & cepagri$horario$year == 120],Umi=cepagri$umid[cepagri$temp > 35 & cepagri$horario$year == 120],Data=cepagri$horario[cepagri$temp > 35 & cepagri$horario$year == 120])
-tabCondExtre <- rbind(data.frame(Temp=cepagri$temp[cepagri$temp < 5 & cepagri$horario$year == 120],Vento=cepagri$vento[cepagri$temp < 5 & cepagri$horario$year == 120],Umi=cepagri$umid[cepagri$temp < 5 & cepagri$horario$year == 120],Data=cepagri$horario[cepagri$temp < 5 & cepagri$horario$year == 120]))
-tabCondExtre <- rbind(tabCondExtre ,data.frame(Temp=cepagri$temp[cepagri$vento>62 & cepagri$horario$year == 120],Vento=cepagri$vento[cepagri$vento>62 & cepagri$horario$year == 120],Umi=cepagri$umid[cepagri$vento>62 & cepagri$horario$year == 120],Data=cepagri$horario[cepagri$vento>62 & cepagri$horario$year == 120]))
-tabCondExtre <- rbind(tabCondExtre ,data.frame(Temp=cepagri$temp[cepagri$umid<20 & cepagri$horario$year == 120],Vento=cepagri$vento[cepagri$umid<20 & cepagri$horario$year == 120],Umi=cepagri$umid[cepagri$umid<20 & cepagri$horario$year == 120],Data=cepagri$horario[cepagri$umid<20 & cepagri$horario$year == 120]))
+tabCondExtre <- data.frame(Temp=cepagri$temp[cepagri$temp > 35 & cepagri$horario$year == 119],Vento=cepagri$vento[cepagri$temp > 35 & cepagri$horario$year == 119],Umi=cepagri$umid[cepagri$temp > 35 & cepagri$horario$year == 119],Data=cepagri$horario[cepagri$temp > 35 & cepagri$horario$year == 119])
+tabCondExtre <- rbind(data.frame(Temp=cepagri$temp[cepagri$temp < 5 & cepagri$horario$year == 119],Vento=cepagri$vento[cepagri$temp < 5 & cepagri$horario$year == 119],Umi=cepagri$umid[cepagri$temp < 5 & cepagri$horario$year == 119],Data=cepagri$horario[cepagri$temp < 5 & cepagri$horario$year == 119]))
+tabCondExtre <- rbind(tabCondExtre ,data.frame(Temp=cepagri$temp[cepagri$vento>62 & cepagri$horario$year == 119],Vento=cepagri$vento[cepagri$vento>62 & cepagri$horario$year == 119],Umi=cepagri$umid[cepagri$vento>62 & cepagri$horario$year == 119],Data=cepagri$horario[cepagri$vento>62 & cepagri$horario$year == 119]))
+tabCondExtre <- rbind(tabCondExtre ,data.frame(Temp=cepagri$temp[cepagri$umid<20 & cepagri$horario$year == 119],Vento=cepagri$vento[cepagri$umid<20 & cepagri$horario$year == 119],Umi=cepagri$umid[cepagri$umid<20 & cepagri$horario$year == 119],Data=cepagri$horario[cepagri$umid<20 & cepagri$horario$year == 119]))
 
 grafCondExtre <- ggplot(tabCondExtre, aes(x = Data, group = 1))
 grafCondExtre <- grafCondExtre + geom_point(aes(y = Temp),size = 0.5, color= "darkgreen", group=1)
@@ -47,7 +47,7 @@ grafCondExtre <- grafCondExtre + geom_line(aes(y = Temp), color= "darkgreen")
 grafCondExtre <- grafCondExtre + geom_line(aes(y = Vento), color= "blue")
 grafCondExtre <- grafCondExtre + geom_line(aes(y = Umi), color= "darkred")+theme_minimal();
 #grafCondExtre <- grafCondExtre + scale_color_continuous(low = "blue", high = "red")
-grafCondExtre <- grafCondExtre + xlab("Meses") + ylab("Valores(ºC % km/h)") + ggtitle("Análise de Temperatura, Vento e Umidade de 2020")
+grafCondExtre <- grafCondExtre + xlab("Meses") + ylab("Valores(ºC % km/h)") + ggtitle("Análise de Temperatura, Vento e Umidade de 2019")
 grafCondExtre
   
 
