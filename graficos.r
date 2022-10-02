@@ -11,7 +11,7 @@ grafTempSensa <- ggplot(tempSensaMes, aes(x = 1:nrow(tempSensaMes), group = 1))
 grafTempSensa <- grafTempSensa + geom_point(aes(y = mediaTemperatura, colour = mediaTemperatura), alpha = 1, group = 1)
 grafTempSensa <- grafTempSensa + geom_point(aes(y = mediaSensacao, colour = mediaSensacao), alpha = 0.3, group = 1)
 
-grafTempSensa <- grafTempSensa + scale_color_continuous(low = "blue", high = "red")
+grafTempSensa <- grafTempSensa + scale_color_continuous(name =  "Média Temperatura", low = "blue", high = "red")
 grafTempSensa <- grafTempSensa + xlab("Meses") + ylab("Temperatura") + ggtitle("Correlação Temperatura e Sensação Térmica")
 grafTempSensa
 
