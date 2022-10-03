@@ -40,7 +40,7 @@ for (ano in unique(cepagri$horario$year)) {
 }
 
 # ------------------------------------------- Tabela de condições extremas de 2020 ------------------------------------------- # 
-
+# 20 ou 21 de junho e acaba em 22 ou 23 de setembro.  inverno = julho agosto setembro
 tabCondExtre <- data.frame(Temp=cepagri$temp[cepagri$temp > 35 & cepagri$horario$year == 120],Vento=cepagri$vento[cepagri$temp > 35 & cepagri$horario$year == 120],Umi=cepagri$umid[cepagri$temp > 35 & cepagri$horario$year == 120],Data=cepagri$horario[cepagri$temp > 35 & cepagri$horario$year == 120])
 tabCondExtre <- rbind(data.frame(Temp=cepagri$temp[cepagri$temp < 5 & cepagri$horario$year == 120],Vento=cepagri$vento[cepagri$temp < 5 & cepagri$horario$year == 120],Umi=cepagri$umid[cepagri$temp < 5 & cepagri$horario$year == 120],Data=cepagri$horario[cepagri$temp < 5 & cepagri$horario$year == 120]))
 tabCondExtre <- rbind(tabCondExtre ,data.frame(Temp=cepagri$temp[cepagri$vento>62 & cepagri$horario$year == 120],Vento=cepagri$vento[cepagri$vento>62 & cepagri$horario$year == 120],Umi=cepagri$umid[cepagri$vento>62 & cepagri$horario$year == 120],Data=cepagri$horario[cepagri$vento>62 & cepagri$horario$year == 120]))
@@ -50,9 +50,9 @@ tabCondExtre <- rbind(tabCondExtre ,data.frame(Temp=cepagri$temp[cepagri$umid<20
 
 tabInverno <- data.frame()
 for (ano in unique(cepagri$horario$year)) {
-  mediaTemperatura <- (mean(cepagri$temp[cepagri$horario$mon == 6 & cepagri$horario$year == ano])+
-                         mean(cepagri$temp[cepagri$horario$mon == 7 & cepagri$horario$year == ano])+
-                         mean(cepagri$temp[cepagri$horario$mon == 8 & cepagri$horario$year == ano]))/3
+  mediaTemperatura <- (mean(cepagri$temp[cepagri$horario$mon == 6 & cepagri$horario$year == ano])+      #
+                         mean(cepagri$temp[cepagri$horario$mon == 7 & cepagri$horario$year == ano])+    # Média das temperaturas durante o inverno de cada ano
+                         mean(cepagri$temp[cepagri$horario$mon == 8 & cepagri$horario$year == ano]))/3  #
   tabInverno <- rbind(tabInverno,data.frame(mediaTemperatura,ano=ano+1900))
 }
 tabInverno <- na.omit(tabInverno)
