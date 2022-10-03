@@ -1,4 +1,13 @@
-# --------------------------- Gráfico média temperatura durante os anos ----------------------------------- #
+grafCondExtre <- ggplot(tabCondExtre, aes(x = Data, group = 1))
+grafCondExtre <- grafCondExtre + geom_point(aes(y = Temp,colour="Temperatura"),size = 0.5, group=1)
+grafCondExtre <- grafCondExtre + geom_point(aes(y = Vento,colour="Vento"),size = 0.5, group=1)
+grafCondExtre <- grafCondExtre + geom_point(aes(y = Umi,colour="Umidade"),size = 0.5, group=1)
+
+grafCondExtre <- grafCondExtre + geom_line(aes(y = Temp,colour="Temperatura"))
+grafCondExtre <- grafCondExtre + geom_line(aes(y = Vento,colour="Vento"))
+grafCondExtre <- grafCondExtre + geom_line(aes(y = Umi,colour="Umidade"))+theme_minimal();
+grafCondExtre <- grafCondExtre + xlab("Meses") + ylab("Valores(ºC % km/h)") + labs(colour="Legenda",title="Análise de Temperatura, Vento e Umidade de 2020")
+grafCondExtre# --------------------------- Gráfico média temperatura durante os anos ----------------------------------- #
 grafTemp <- ggplot(mediasPorMes, aes(x = 1:nrow(mediasPorMes), group = 1,  weight = Umidade))
 grafTemp <- grafTemp + geom_point(color=rgb(255, 0, 0, maxColorValue = 255), aes(y = Temp, group = 1))
 grafTemp <- grafTemp + geom_line(color=rgb(255, 0, 0, maxColorValue = 255), aes(y = Temp, group = 1))
@@ -38,21 +47,17 @@ tabCondExtre <- rbind(data.frame(Temp=cepagri$temp[cepagri$temp < 5 & cepagri$ho
 tabCondExtre <- rbind(tabCondExtre ,data.frame(Temp=cepagri$temp[cepagri$vento>62 & cepagri$horario$year == 120],Vento=cepagri$vento[cepagri$vento>62 & cepagri$horario$year == 120],Umi=cepagri$umid[cepagri$vento>62 & cepagri$horario$year == 120],Data=cepagri$horario[cepagri$vento>62 & cepagri$horario$year == 120]))
 tabCondExtre <- rbind(tabCondExtre ,data.frame(Temp=cepagri$temp[cepagri$umid<20 & cepagri$horario$year == 120],Vento=cepagri$vento[cepagri$umid<20 & cepagri$horario$year == 120],Umi=cepagri$umid[cepagri$umid<20 & cepagri$horario$year == 120],Data=cepagri$horario[cepagri$umid<20 & cepagri$horario$year == 120]))
 
-
-
 grafCondExtre <- ggplot(tabCondExtre, aes(x = Data, group = 1))
-grafCondExtre <- grafCondExtre + geom_point(aes(y = Temp),size = 0.5, color= "darkgreen", group=1)
-grafCondExtre <- grafCondExtre + geom_point(aes(y = Vento),size = 0.5, color= "darkblue", group=1)
-grafCondExtre <- grafCondExtre + geom_point(aes(y = Umi),size = 0.5, color= "darkred", group=1)
+grafCondExtre <- grafCondExtre + geom_point(aes(y = Temp,colour="Temperatura"),size = 0.5, group=1)
+grafCondExtre <- grafCondExtre + geom_point(aes(y = Vento,colour="Vento"),size = 0.5, group=1)
+grafCondExtre <- grafCondExtre + geom_point(aes(y = Umi,colour="Umidade"),size = 0.5, group=1)
 
-grafCondExtre <- grafCondExtre + geom_line(aes(y = Temp), color= "darkgreen")
-grafCondExtre <- grafCondExtre + geom_line(aes(y = Vento), color= "blue")
-grafCondExtre <- grafCondExtre + geom_line(aes(y = Umi), color= "darkred")+theme_minimal();
-#grafCondExtre <- grafCondExtre + scale_color_continuous(low = "blue", high = "red")
-grafCondExtre <- grafCondExtre + xlab("Meses") + ylab("Valores(ºC % km/h)") + ggtitle("Análise de Temperatura, Vento e Umidade de 2020")
+grafCondExtre <- grafCondExtre + geom_line(aes(y = Temp,colour="Temperatura"))
+grafCondExtre <- grafCondExtre + geom_line(aes(y = Vento,colour="Vento"))
+grafCondExtre <- grafCondExtre + geom_line(aes(y = Umi,colour="Umidade"))+theme_minimal();
+grafCondExtre <- grafCondExtre + xlab("Meses") + ylab("Valores(ºC % km/h)") + labs(colour="Legenda",title="Análise de Temperatura, Vento e Umidade de 2020")
 grafCondExtre
   
-
 #----------------------------------Gráfico - correlação temperatura-umidade mês--------------------------------------
 
 grafTempUmid <- ggplot(tempUmidadeMes) +  
